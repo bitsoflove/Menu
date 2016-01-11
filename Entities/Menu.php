@@ -2,12 +2,10 @@
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Menu\Traits\MultiSiteTenancyTrait;
 
 class Menu extends Model
 {
     use Translatable;
-    use MultiSiteTenancyTrait;
 
     protected $fillable = [
         'name',
