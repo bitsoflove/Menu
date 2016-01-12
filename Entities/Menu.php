@@ -16,6 +16,7 @@ class Menu extends Model
         'title',
         'status',
         'primary',
+        'site_id'
     ];
     public $translatedAttributes = ['title', 'status'];
     protected $table = 'menu__menus';
