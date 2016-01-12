@@ -5,11 +5,17 @@ use Illuminate\Support\Facades\App;
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 use Modules\Menu\Events\MenuWasCreated;
 use Modules\Menu\Repositories\MenuRepository;
+use \Site;
 
 class EloquentMenuRepository extends EloquentBaseRepository implements MenuRepository
 {
     public function create($data)
     {
+        if(is_module_enabled('Site')) {
+            $siteId = Site::id();
+            $data['site_id'] = $siteId;
+        }
+
         $menu = $this->model->create($data);
 
         event(new MenuWasCreated($menu));
