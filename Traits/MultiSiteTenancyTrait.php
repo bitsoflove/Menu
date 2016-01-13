@@ -8,7 +8,7 @@ trait MultiSiteTenancyTrait {
     public function newQuery()
     {
         $query = parent::newQuery();
-        if (is_module_enabled('Site')) {
+        if(array_key_exists('Site', app('modules')->enabled())) {
             $this->appendWhereClause($query);
         }
 
