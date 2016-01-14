@@ -20,3 +20,8 @@
         <option value="_blank">{{ trans('menu::menu-items.form.new tab') }}</option>
     </select>
 </div>
+
+<div class="form-group">
+    {!! Form::label("icon", trans('menu::menu-items.form.class')) !!}
+    {!! Form::text("class", Input::old("class"), ['class' => 'form-control', 'placeholder' => trans('menu::menu-items.form.class')]) !!}
+</div>
