@@ -1,5 +1,6 @@
 <?php namespace Modules\Menu\Providers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Modules\Menu\Entities\Menu;
@@ -8,12 +9,14 @@ use Modules\Menu\Repositories\Cache\CacheMenuDecorator;
 use Modules\Menu\Repositories\Cache\CacheMenuItemDecorator;
 use Modules\Menu\Repositories\Eloquent\EloquentMenuItemRepository;
 use Modules\Menu\Repositories\Eloquent\EloquentMenuRepository;
+use Modules\Site\Facades\Site;
 use Pingpong\Menus\MenuBuilder as Builder;
 use Pingpong\Menus\MenuFacade;
 use Pingpong\Menus\MenuItem as PingpongMenuItem;
 
 class MenuServiceProvider extends ServiceProvider
 {
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -152,6 +155,11 @@ class MenuServiceProvider extends ServiceProvider
         if (! $this->app['asgard.isInstalled']) {
             return;
         }
+
+        if(array_key_exists('Site', app('modules')->enabled())) {
+            Site::setLocale();
+        }
+
         $menu = $this->app->make('Modules\Menu\Repositories\MenuRepository');
         $menuItem = $this->app->make('Modules\Menu\Repositories\MenuItemRepository');
         foreach ($menu->allOnline() as $menu) {
