@@ -43,7 +43,11 @@ class MenuController extends AdminBaseController
 
     public function create()
     {
-        return view('menu::admin.menus.create');
+        $data = [];
+        if(is_module_enabled('Site')) {
+            $data['supportedLocales'] = \Site::current()->siteLocales->lists('title', 'locale')->toArray();
+        }
+        return view('menu::admin.menus.create', $data);
     }
 
     public function store(CreateMenuRequest $request)
@@ -60,8 +64,13 @@ class MenuController extends AdminBaseController
         $menuItems = $this->menuItem->allRootsForMenu($menu->id);
 
         $menuStructure = $this->menuRenderer->renderForMenu($menu->id, $menuItems->nest());
+        $data = compact('menu', 'menuStructure');
 
-        return view('menu::admin.menus.edit', compact('menu', 'menuStructure'));
+        if(is_module_enabled('Site')) {
+            $data['supportedLocales'] = \Site::current()->siteLocales->lists('title', 'locale')->toArray();
+        }
+
+        return view('menu::admin.menus.edit', $data);
     }
 
     public function update(Menu $menu, UpdateMenuRequest $request)

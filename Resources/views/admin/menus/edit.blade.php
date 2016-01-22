@@ -16,6 +16,13 @@
 @stop
 
 @section('content')
+
+    <?php
+        if(!isset($supportedLocales) || empty($supportedLocales)) {
+            $supportedLocales = LaravelLocalization::getSupportedLocales();
+        }
+    ?>
+
 {!! Form::open(['route' => ['admin.menu.menu.update', $menu->id], 'method' => 'put']) !!}
 <div class="row">
     <div class="col-md-6">
@@ -39,20 +46,13 @@
             </div>
             <div class="box-body">
                 <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs">
-                        <?php $i = 0; ?>
-                        <?php foreach (LaravelLocalization::getSupportedLocales() as $locale => $language): ?>
-                            <?php $i++; ?>
-                            <li class="{{ App::getLocale() == $locale ? 'active' : '' }}">
-                                <a href="#tab_{{ $i }}" data-toggle="tab">{{ trans('core::core.tab.'. strtolower($language['name'])) }}</a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                    @include('partials.form-tab-headers', ['fields' => ['title', 'body']])
+
                     <div class="tab-content">
                         <?php $i = 0; ?>
-                        <?php foreach (LaravelLocalization::getSupportedLocales() as $locale => $language): ?>
+                        <?php foreach ($supportedLocales as $locale => $language): ?>
                             <?php $i++; ?>
-                            <div class="tab-pane {{ App::getLocale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
+                            <div class="tab-pane {{ App::getLocale() == $locale ? 'active' : '' }}" id="tab_{{ $locale }}">
                                 @include('menu::admin.menus.partials.edit-trans-fields', ['lang' => $locale])
                             </div>
                         <?php endforeach; ?>
