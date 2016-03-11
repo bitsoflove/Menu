@@ -1,5 +1,5 @@
 {
-  "name": "asgardcms/menu-module",
+  "name": "bitsoflove-asgard/menu",
   "type": "asgard-module",
   "description": "Menu module for AsgardCMS. Handles all the menus.",
   "keywords": [
@@ -26,7 +26,7 @@
     "composer/installers": "~1.0",
     "pingpong/menus": "2.*@dev",
     "typicms/nestablecollection": "1.1.1",
-    "asgardcms/core-module": "dev-master",
+    "bitsoflove-asgard/core": "~1.22.0.1",
     "dimsav/laravel-translatable": "~5.0"
   },
   "require-dev": {
